@@ -36,7 +36,7 @@ jobs:
           git config --global user.email "icolabot@e.yfun.top"
           git config --global user.name "iColaBot"
           npm version patch
-          npm publish
+          npm publish --access public
           
       # 删除 rawimg/ 和 webpimg/ 下的所有文件
       - name: Delete Files
@@ -45,5 +45,12 @@ jobs:
           rm -rf rawimg/*
           touch webpimg/.gitkeep
           touch rawimg/.gitkeep
+          
+      - name: Push
+        run: |
+          git add -A
+          git commit -m "Publish"
+          git push origin master
+          
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
